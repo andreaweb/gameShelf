@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>GameShelf - Em progresso</title>
+    
+    
+    
+    
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+    
+  </head>
+
+  <body>
+
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
+<body ng-app="temporada" ng-controller="gamesController">
+	<header id="topo">
+    	<div>
+    		<a href="#"><img src="http://crit.home.xs4all.nl/andrea/images-portfolio/controle.png" class="logotipo" alt="Logotipo Game Shelf">
+        </div>
+        
+        <nav>
+            <ul>
+            	<li><a href="#">Game Shelf - Um Projeto em AngularJS</a></li>
+                <li><a href="#" class="btn btn-info">Cadastre-se/Login</a></li>               
+            </ul>
+        </nav>
+    </header>
+    
+    <main id="page">	
+                
+        <!-- lista dos seriados -->
+        <div class="seriados">
+            <h2>Busca</h2>
+
+            <form>
+                    <span class="glyphicon glyphicon-search" ></span >
+    
+                    
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="search"
+                                   placeholder="Escolha o tipo de busca  - Padrão: Nome"
+                                    />
+                            
+                           <select class="form-smaller" ng-model="filter">
+                               <option value="name">por nome</option>
+                               <option value="categories">por categoria</option>
+                               <option value="country">por plataforma</option>
+                               <option value="channel">por produtora</option>
+                           </select>                  
+    
+                    <span class="glyphicon glyphicon-sort-by-attributes" ></span >
+    
+                    
+                        <select class="form-control"
+                                        ng-model="order">
+                            
+                            
+                            <option value="-stars" >Avaliação (maior para menor)</option >
+                            <option value="stars" >Avaliação (menor para maior)</option >
+                            <option value="-premiere" >Ano de Lançamento (maior para menor)</option >
+                            <option value="premiere" >Ano de Lançamento (menor para maior)</option >
+                            
+                        </select >
+                   
+                    <button class="btn btn-alert"><a href="#">Cadastrar Nova</a></button>
+            </form >
+            
+            <section ng-show="filteredgames.length == 0" ng-cloak>
+					
+						<div class="alert alert-danger">
+							<p>Não encontramos nenhum resultado para '{{ search }}'. <a href="#">Gostaria de cadastrar uma nova série?</a></p>
+						</div>
+					
+			</section>
+                       
+            <div ng-app="ngAnimate" ng-repeat="game in filteredgames = (games | filter:search | filter:getFilter() | orderBy:order)"  ng-switch on="activated" ng-class="{active: activated}">
+                <figure>
+                    <!--<img ng-src="{{game.image}}" alt="{{game.name}}">              
+                        -->
+                    <img class="imgAnimate" ng-switch-when="true" src='{{game.imagelarger}}'>
+                    <img class="imgAnimate" ng-switch-default   src='{{game.image}}'>
+
+                    <figcaption ng-click="activated = !activated; info = !info" ng-model="activated"  ng-class="{{game.situation}}" >
+                        <span ng-bind="game.name"></span>
+                        <span ng-bind="game.situation"></span>
+                    </figcaption>
+                    <rating value="game.stars" max="5"></rating> 
+                </figure>
+                
+                <section class="more" ng-attr-id="{{ $index }}" ng-show="info">	
+                    <div>
+                        <p><span>Lançamento: </span>{{game.premiere}}</p>
+                        <p><span>Categorias: </span> {{arrayToString(game.categories)}}</p>
+                        <p><span>País de Origem: </span>{{game.country}}</p>
+                        <p><span>Produzido por: </span>{{game.channel}}</p>
+                    </div>
+                    <div>
+                       <p><span>Comentário: </span>{{game.comment}}</p>
+                        <button class="btn btn-info"><a href="#">Avalie esta Série</a></button>
+                    </div>
+                </section>
+
+
+            </div> <!-- fecha div ng-repeat que mostra os seriados individualmente -->
+        
+        </div> <!-- fecha div de conteúdo -->
+     </main>
+     
+     <footer>
+        <section>
+            <a href="#topo">Topo</a>
+        </section>
+
+     	<nav>
+        	<ul>
+                <li><a href="#">Game Shelf - Um projeto em AngularJS</a></li>             
+            </ul>
+        </nav>
+        <div class="celular">
+                        <div class="mC">
+                            <div id="menu1" class="mL">
+                                
+                                <ul>
+                                    <li><a href="#">Game Shelf - Um projeto em AngularJS</a></li>
+                                    <li onclick="toggleMenu('menu1')"><a href="#">Fechar Menu</a></li>              
+                                </ul>
+                            </div>
+                            <div class="mH" onclick="toggleMenu('menu1')"><a href="#">Menu</a></div>
+                                                       
+                               
+                        </div>
+        </div>
+    </footer>
+</body>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+  </body>
+</html>

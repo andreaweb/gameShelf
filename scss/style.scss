@@ -1,0 +1,595 @@
+@charset "utf-8";
+//functions
+@function fluidize($target, $context){
+	@return ($target/$context) * 100%;
+}
+//colors
+$mainRed: #DE5837;
+$opaqueRed: #E9907B;
+$mainBlue: rgb(25,119,178);
+$opaqueBlue: #A7CFA0;
+$mainYellow: rgb(255,252,20);
+$bgColor: #FFD055;
+$black: #1A1919;
+//fontes
+$mainFont: 'Noto Sans', Helvetica, Arial, Trebuchet, Verdana, sans-serif;
+$secondaryFont: 'Comfortaa', Century, "Times New Roman", Garamond, serif;
+
+body{
+	background-color:$bgColor;
+	font-family: $mainFont;
+	margin: 0 !important;
+	padding: 0 !important;
+	
+	h1{
+		font-size: 1.6em;
+	}	
+
+	a{
+		color: #fff;
+		font-family: $secondaryFont;
+	}
+	
+	a:hover{
+		text-decoration:none;
+	}
+	.btn{
+		display: inline-block;
+	    padding: 6px 12px;
+	    margin-bottom: 0;
+	    font-size: 14px;
+	    font-weight: 400;
+	    line-height: 1.42857143;
+	    text-align: center;
+	    white-space: nowrap;
+	    vertical-align: middle;
+	    -ms-touch-action: manipulation;
+	    touch-action: manipulation;
+	    cursor: pointer;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	    background-image: none;
+	    border: 1px solid transparent;
+	    border-radius: 4px;
+	}
+	.btn-info{
+		background-color:$mainBlue;
+		background-color:$opaqueBlue;
+		transition: all .5s;
+	}
+	.btn-alert{
+		background-color:$mainRed;
+		background-color:$opaqueRed;
+		transition: all .5s;
+	}
+}
+
+[ng-cloak]
+{
+  display: none !important;
+}
+
+
+//header e menu
+
+header{
+	background:$black;
+	height:150px;
+	margin:0 0 40px 0;
+
+	div{
+		&:hover{
+			@mixin menuAnimate{
+				transform: rotate(-5deg) translateY(-10px);
+				transition: all 1s;
+			}	
+			img{ 
+				@include menuAnimate;
+			}
+			span{
+				@include menuAnimate;
+				transform: rotate(-10deg) translateY(-15px);
+			}
+		}
+	}
+
+	img.logotipo{
+		height:100px;
+		margin:10px 20px 0px 50px;
+		float:left;
+	}
+	
+	span{
+		font-family: $secondaryFont;
+		font-size:14px;
+		color:#fff;
+		font-weight:400;
+		float:left;
+		clear:both;
+		margin:5px 0 0 36px;
+	}
+	
+	nav ul li{
+		display:inline-block;
+		font-family: $secondaryFont;
+		font-size:24px;
+		padding:0 20px;
+		margin:40px 20px;
+	}
+
+	nav ul li:first-child{
+		margin-left: 10%;
+	}
+	
+	
+	@media screen and (min-width:1600px){
+		nav ul li {
+			margin:40px;
+		}
+	}
+
+	@media screen and (min-width:1800px){
+		nav ul li{
+			margin: 40px 3.3%;
+		}
+	}
+
+	@media screen and (max-width:1300px){
+		nav ul li {
+			margin:40px fluidize(15,1300);
+		}
+		nav ul li:first-child{
+			margin-left: 8%;
+		}
+
+	}
+
+	@media screen and (max-width: 1110px){
+		nav ul li{
+			padding: 0;
+		}
+	
+		nav ul li{
+			margin:20px fluidize(15,1300);
+		}
+	}
+
+	@media screen and (max-width:640px){
+		nav ul li:last-child {
+    		margin: 0px 22% 0 0%;
+		}
+	}
+	@media screen and (max-height:700px){ //a altura do header 'normal' ocupa muito espaço em telas menores
+		height: 100px;
+
+		img[alt="Logotipo Temporada"]{
+			height: 80px;
+		}
+		span{
+			display: none;
+		}
+	}
+
+	@media screen and (max-height:700px) and (max-width: 1110px){
+		nav ul li{
+			font-size: 20px;
+			margin: 3% 0.8% 0;
+		}
+	}
+
+	@media screen and (max-width:740px){
+		nav ul li:last-child{
+			float: right;
+			margin: 10px 33% 0 13%;
+		}
+	}
+	@media screen and (min-width:600px) and (max-width: 650px){
+		nav ul li:last-child{
+			margin: 5px 21% 0 13%;
+		}
+	}
+	@media screen and (max-width:599px){
+		nav{
+			display: none;
+		}
+		img{
+			margin: 0 auto;
+    		padding: 5px;
+    		width: auto;
+    		display: block;
+		}
+	}
+
+
+}
+
+//Container
+main{
+	max-width: 1260px;
+	margin:0 auto;	
+	//calculado de modo que o form sempre tenha a largura proporcional à quantidade de seriados por linha que cabem naquela altura
+	//fórmula = (240 + 12)* n, onde os parenteses correpondem à largura de cada seriado e n a quantidade de seriados/linha
+	@media screen and (max-width:1600px) and (min-width:1280px){
+		width: 1008px;
+	}
+	@media screen and (max-width:1279px) and (min-width:960px){
+		width: 756px;
+	}
+	@media screen and (max-width:959px) and (min-width:640px){
+		width: 504px;
+	}
+	@media screen and (max-width:639px) and (min-width:320px){
+		width: 252px;
+	}
+}
+
+//campo busca, ordem e feedback
+form{
+    margin-bottom: 15px;
+    width: 97%;
+    height: 65px;
+    display: block;
+	.alert a{
+		color:$opaqueBlue;
+	}
+	button{
+		float:right;
+	}
+		span{
+		color:$opaqueBlue;
+		display: block;
+		float: left;
+		padding:10px 5px;
+	}
+	@mixin formInput{
+		display: block;
+		float:left;
+	    width: 30%;
+	    height: 34px;
+	    padding: 6px 12px;
+	    font-size: 14px;
+	    line-height: 1.42857143;
+	    color: #555;
+	    background-color: #fff;
+	    background-image: none;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	}
+	.form-control{
+		@include formInput;
+	}
+	.form-smaller{
+		@include formInput;
+		width: 10%;
+		min-width: 130px;
+		margin-right: 6%;
+		margin-left: 1%;
+	}
+	@media screen and (max-width:1279px) and (min-width:960px){
+		height: 95px;
+		span{
+			clear: left;
+		}
+		.form-control{
+			width: 45%;
+		}
+		select[ng-model=order]{
+			margin-top: 5px;
+		}
+	}
+	@media screen and (max-width:959px){
+		height: 140px;
+		span{
+			clear: left;
+		}
+		.form-control{
+			width: 60%;
+		}
+		select[ng-model=order]{
+			margin-top: 5px;
+			width: 89%;
+		}
+		button{
+			width: 89%;
+			margin-left: 5%;
+    		margin-top: 5px;
+    		float: left;
+		}	
+	}
+	@media screen and (max-width:640px){
+		height: 175px;
+		input.form-control{
+			width: 88%;
+		}
+		.form-smaller, button{
+			margin: 5px 0 0 11%;
+    		width: 88%;
+		}
+	}
+} 
+
+//lista dos seriados
+
+.seriados div[ng-repeat]{
+	height:auto;
+	width:240px;
+	position:relative;
+	float:left;
+	margin: 0.25em;
+}
+
+.seriados div.active {
+	width:100%;
+}
+
+.imgAnimate{
+  max-width: 100%;
+}
+
+.seriados div figcaption span{
+	font-size: 18px;
+    position: relative;
+    color: #ddd;
+    top: 1em;
+  
+    &:last-child{
+    	opacity: 0;
+    	visibility: hidden;
+    }
+
+}
+.seriados div.active figcaption span:last-child{
+	opacity: 1;
+	visibility: visible;
+	float:right;
+	margin-right:15px;
+}
+
+figcaption{
+	bottom:0;
+	position:relative;
+	cursor:pointer;	
+	padding:10px;
+	height: 8em;
+	font-family: $secondaryFont;
+	font-weight:700;
+	background-color:$mainRed;
+	
+		&:hover{
+			background-color:$opaqueRed;
+		}
+
+	@media screen and (max-width:640px){
+		.active &{
+			bottom:1px;
+		}
+	}
+}
+ .rating{
+    	    top: 150px;
+		    right: 15px;
+		    display: block;
+		    position: absolute;
+		    float: right;
+
+		    .glyphicon {
+			    padding: 1px;
+			    color: rgba($bgColor, 0.6);
+			    font-size: 20px;
+			    text-shadow: .05em .05em #aaa;
+			    list-style-type: none;
+			    display: inline-block;
+			    cursor: pointer;
+
+			    &.filled {
+			      color: #fd0;
+			    }
+			  }
+}
+.active .rating{
+	display:none;
+}
+//mais informações sobre cada seriado
+
+.more{
+	background:#fff;
+	color: #666;
+	margin:-70px 0 20px 0;
+	padding: 15px 10px;
+    width: 100%;
+    min-height: 160px;
+    opacity: 1;
+    transition: all .5s;
+ 
+ 	&.ng-hide:not(.ng-hide-animate) {
+    	visibility: hidden;
+    	display: inline-block !important;
+    	height: 0 !important;
+    	width: 0;
+    	opacity:0;
+    	line-height: 0 !important;
+    	position: absolute;
+ 
+	}
+    &.ng-hide{
+    	
+    	background:rgba(255, 255, 255, 0.1);
+
+    	button, p{
+    		display: none;
+    	}
+    }
+
+   	span{
+		font-weight:700;	
+	}
+	p i{
+		line-height:1em;
+		}
+	div{
+		width: 48%;
+		padding: 0 3%;
+		float:left;
+
+		button{
+			float:right;
+		}
+
+		&:last-child{
+			border-left:1px solid #aaa;
+		}
+	}
+	@media screen and (max-width: 960px){
+		min-height: 220px;
+		button{
+			margin-top: 10px;
+		}
+	}
+	@media screen and (max-width:640px){
+		min-height: 420px;
+		margin-top: 0;
+		div {
+    		width: 90%;
+    		padding: 0 3%;
+    		margin: 5%;
+		}
+		div:last-child {
+    		border-top: 1px solid #aaa;
+    		border-left: none;
+		}
+		button{
+			margin-top: 20px;
+		}
+	}
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    margin-top: 1px;
+}
+.icon-star{background-position:-120px 0;}
+.icon-star-empty{background-position:-144px 0;}
+.star-rating {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  
+
+}
+
+
+//rodapé
+footer{
+	background:$black;
+	height:70px;
+	color:#fff;
+	float: left;
+    width: 100%;
+    clear: both;
+	padding:20px 0 0 0;
+	position:fixed;
+	bottom:0;
+
+	nav ul li{
+		display:inline-block;
+		font-family: $secondaryFont;
+		margin:0 5%;
+	}
+	section{
+		float: left;
+		width: 10%;
+	}
+	nav{
+		float: right;
+		width: 45%;
+		margin-right: 10%;
+	}
+	section p{
+		margin:0 20px;
+	}
+	section a{
+		margin:0 40px;
+		color:rgba($bgColor, 0.9);
+	}
+
+	.mC {width:155px; margin:5px; float:right;}
+	.mH {    cursor: pointer;
+    top: -6px;
+    position: relative;
+    float: right;
+    font-weight: bold;
+    margin-right: 35%; }
+	.mL {
+		display:none; 
+		top:-135px;
+		position: relative;
+		background-color:#222;
+		}
+	.mO {margin-left:10px; display:block;}
+
+	.celular{
+		display:none;
+		color:#6d6b6c;
+	}
+	.celular ul{
+		text-align: left;
+	margin-left: -6%;
+	list-style-type:none;
+	}
+	.celular ul li{
+		line-height:2em;
+		margin-left: 18px;
+	}
+
+	@media screen and (max-width:1400px) and (min-width:1001px){
+		nav{
+			width: 62%;
+		}
+	}
+	@media screen and (max-width:1000px) and (min-width: 801px){
+		nav{
+			width: 80%;
+		}
+	}
+	@media screen and (max-width:800px){
+		nav{
+			width: 80%;
+		}
+		nav ul li{
+			margin: 0 0 0 5%;
+		}
+	}
+	@media screen and (max-width:599px){
+		nav{
+			display: none;
+		}
+		.celular{
+			display: block;
+		}
+	}
+
+}
+
+//fixes bootstrap
+.alert{
+	padding: 0 15px 15px;
+}
+.btn-alert:hover, .btn-alert a:hover, .btn-alert:visited, .btn-alert a:visited{
+	background-color: $mainRed;
+	color: #fff;
+}
+.btn-info:hover, .btn-info a:hover, .btn-info:visited, .btn-info a:visited{
+	background-color: $bgColor;
+	color: #fff;
+}
